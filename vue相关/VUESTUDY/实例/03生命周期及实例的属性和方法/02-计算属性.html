@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02-计算属性</title>
+</head>
+<body>
+    <div id="app">
+        <!--1.基本用法-->
+        <h2>{{msg2}}</h2>
+        <!--2.对数据进行处理,然后再显示-->
+        <!--这样直接在HTML里进行逻辑处理操作,会让模板的结构不清晰,不建议这么做-->
+        <h3>{{msg.split(' ').reverse().join(' ')}}</h3>
+        <!--这样在计算属性里面进行逻辑处理操作,相对上面的形式来说会比较好-->
+        <h2>{{reverseMsg}}</h2>
+
+        <!--3.计算属性 vs 方法-->
+        <p>{{num1}}</p>
+        <p>{{num2}}</p>
+
+        <!--4.get和set-->
+        {{num2}}
+        <button @click="change">修改计算属性</button>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'welcome to appArea',
+                num1:5
+            },
+            computed:{
+                // 这里的内容必须是一个函数才可以,要有返回值,用来获取属性值,也叫作get函数
+                // 会进行自动的监视,reverseMsg是依赖于msg的
+                msg2:function(){
+                    return '1111';
+                },
+                reverseMsg:function(){
+                    return this.msg.split(' ').reverse().join(' ');
+                },
+                num2:{
+                    // return this.num1-1;
+                    get:function(){
+                        return this.num1-1;
+                    },
+                    set:function(val){
+                        console.log('修改值');
+                        // this.num2=val;//这样是一个死循环
+                        this.num1=111;//因为num2是依赖于num1的,修改num1,num2会自动监听的
+                    }
+                }
+            },
+            methods:{
+                change(){
+                    this.num2=111;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

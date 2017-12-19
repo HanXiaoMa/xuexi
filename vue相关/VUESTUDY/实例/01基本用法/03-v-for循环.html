@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>03-v-for循环</title>
+</head>
+<body>
+    
+    <div id="app">
+        <!--可以通过指定:key这个属性绑定唯一的key,作用：当更新元素时可重用元素,提高效率;类似于1.0中的track-by-->
+        <ul>
+            <li v-for="(item,index) in arr" :key="k">{{item}} - {{index}}</li>
+        </ul>
+        <ul>
+            <li v-for="(value,key) in user">{{value}} - {{key}}</li>
+        </ul>
+
+        <!--循环带有重复数据的集合 可以直接循环,在1.0中是不行的-->
+
+        <ul>
+            <li v-for="(user,index) in users">
+                {{index+1}}-{{user.id}},{{user.name}},{{user.age}}
+            </li>
+        </ul>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                arr:[1,2,3,4,5,6,9,8],
+                arr2:[1,2,3,4,5,6,9,8,8,4],
+                user:{id:1,name:'szr',age:23},
+                users:[
+                    {id:11,name:'szr',age:23},
+                    {id:22,name:'jerry',age:24},
+                    {id:33,name:'Tom',age:25}
+                ]
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>07-组件的v-model</title>
+</head>
+<body>
+	
+
+	<div id="box">
+		<my-check v-model="checked"></my-check>
+		{{ checked }}
+	</div>
+	<script type="text/javascript" src="../../vue.js"></script>
+	<script type="text/javascript">
+		Vue.component('my-check',{
+			template:'<input type="checkbox" :checked="chk" @change="$emit(\'change\',$event.target.checked)" />',
+			model:{
+				prop:"chk",
+				event:"change"
+			},
+			props:{
+				chk:Boolean
+			}
+		});
+		var vm = new Vue({
+			el:'#box',
+			data:{
+				checked:true
+			}
+		});
+	</script>
+</body>
+</html>

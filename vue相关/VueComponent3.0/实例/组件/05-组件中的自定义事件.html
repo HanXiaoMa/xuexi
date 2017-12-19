@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>05-组件中的自定义事件</title>
+</head>
+<body>
+	
+	<div id="box">
+		{{ total }}
+		<my-counter v-on:inc="gIncreatment"></my-counter>
+	</div>
+	<script type="text/javascript" src="../../vue.js"></script>
+	<script type="text/javascript">
+		Vue.component("my-counter",{
+			template:'<button @click="IncreatmentComp">点击+1</button>',
+			methods:{
+				IncreatmentComp(){
+					this.$emit("inc");
+				}
+			}
+		});
+		var vm = new Vue({
+			el:'#box',
+			data:{
+				total:0
+			},
+			methods:{
+				gIncreatment(){
+					this.total++;
+				}
+			}
+		});
+	</script>
+</body>
+</html>

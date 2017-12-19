@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>05-监视数据的变化 $watch</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="name"> {{name}}
+        <hr>
+        <input type="text" v-model="age"> {{age}}
+        <hr>
+        <input type="text" v-model="user.name"> {{user.name}}
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: 'szr',
+                age: 23,
+                user:{
+                    name:'Jerry',
+                    age:24
+                }
+            },
+            computed: {
+
+            },
+            // 方式2：使用vue实例提供的watch选项
+            watch: {
+                age: (newValue, oldValue) => {
+                    console.log('age被修改了', '原值:' + oldValue, '新值:' + newValue);
+                },
+                user:{
+                    // 深度监视 - 当对象中的属性发生变化时,但是拿到的是地址空间
+                    handler:(newValue,oldValue)=>{
+                        console.log('user被修改了', '原值:' + oldValue.name, '新值:' + newValue.name);
+                    },
+                    deep:true
+                }
+            }
+        });
+        // 方式1：使用vue实例提供的$watch()方法
+        vm.$watch('name', function (newValue, oldValue) {
+            console.log('name被修改了', '原值:' + oldValue, '新值:' + newValue);
+        });
+        // 如果是对象直接在后面加一个true就行
+    </script>
+</body>
+
+</html>

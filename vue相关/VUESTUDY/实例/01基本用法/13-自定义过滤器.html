@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>13-自定义过滤器</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h3 v-cloak>{{8 | addZero}}</h3>
+        <p v-cloak>{{12.345678 | number(2)}}</p>
+        <span v-cloak>{{currentTime | date}}</span>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        // 自定义全局过滤器
+
+        // 补零
+        Vue.filter('addZero',function(data){
+            return data<10?'0'+data:data;
+        });
+
+        // 取几位小数
+        Vue.filter('number',(data,n)=>{
+            return data.toFixed(n);
+        });
+
+        Vue.filter('date',data=>{
+            let d=new Date(data);
+			return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+        });
+        new Vue({
+            el:'#app',
+            data:{
+                currentTime:Date.now()
+            },
+			filters:{ //局部过滤器
+				number:(data,n) => {
+					return data.toFixed(n);
+				}
+			}
+        });
+    </script>
+</body>
+</html>

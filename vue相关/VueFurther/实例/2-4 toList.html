@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2-4 TODOList</title>
+    <style>
+        #box {
+            font-family: "微软雅黑";
+            width: 350px;
+            margin: 30px auto;
+            background: #eee;
+            padding: 30px 50px;
+        }
+        
+        #box ul {
+            padding-left: 0;
+        }
+        
+        #box ul li {
+            list-style: none;
+        }
+        
+        .add {
+            width: 200px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        
+        .span1 {
+            color: blue;
+            cursor: pointer;
+        }
+        .finish{
+            color: gray;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <h1>任务列表</h1>
+        <p>任务总数：{{ arr.length }} ; 还有{{ choose() }}条未完成 【<span class="span1" @click="finish()">完成</span>】</p>
+        <ul>
+            <li v-for="(item,index) in arr" :class="{finish:item.bol}">
+                <!--
+                    v-model type类型为checkbox的时候
+                    true表示选择,false表示未选择
+                -->
+                <input type="checkbox" v-model="item.bol"></input>
+                <!--
+                    v-text 用来设置文本内容的
+                    语法：v-text="变量"
+                -->
+                <!--<span>{{item}}</span>-->
+                <span v-text="item.des" v-show="!item.edit" @click="edit(index)"></span>
+                <input type="text" v-model="item.des" v-show="item.edit" @blur="item.edit=false">
+                <!--
+                    @事件名称='函数/Js代码'
+                -->
+            </li>
+        </ul>
+        <input type="text" class="add" v-model="msg">
+        <button @click="add">添加</button>
+    </div>
+
+    <script src="../vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#box',
+            data: {
+                // 每条数据中应该有数据的内容 和 数据的状态 和 编辑的状态
+                arr:[
+                    {des:'设计',bol:false,edit:false},
+                    {des:'编写js代码',bol:false,edit:false},
+                    {des:'设计产品原型',bol:false,edit:false}
+                ],
+                msg:''
+            },
+            methods: {
+                add:function(){
+                    // 添加数据
+                    this.arr.push({des:this.msg,bol:false});
+                    this.msg='';
+                },
+                choose:function(){
+                    // 对所有数组中的元素进行遍历,查看bool值的情况
+                    // bol为false,是未完成的,true是已经完成的
+                    var num=0; // 未完成任务的数量
+                    this.arr.forEach(function(item){
+                        if(!item.bol){// 当前任务未完成
+                            // 增加未完成的数量
+                            num++;
+                        }
+                    });
+                    return num;
+                },
+                finish:function(){
+                    // 对所有数据进行遍历,如果已完成,将其删除掉
+                    // 先将arr清空,然后进行遍历,将未完成的数据重新添加进来
+                    var temp=this.arr; // 清空arr前,将数据保存在临时数据变量中
+                    this.arr=[];
+                    for(var i=0;i<temp.length;i++){
+                        if(!temp[i].bol){
+                            this.arr.push(temp[i]);
+                        }
+                    }
+                },
+                edit:function(i){
+                    // 需要判断一下当前的数据是否是已经完成,若是已完成的状态,那么不能对数据进行更改,如果是未完成的状态,才可以改变其edit
+                    if(this.arr[i].bol){
+                        return; // 终止,下放都不会进行执行
+                    }
+                    // 更改edit值变为true
+                    this.arr[i].edit=true;
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

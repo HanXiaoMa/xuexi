@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="mui-content">
+		    <input type="button" value="test" onclick="test()" />
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			function test(){
+				// 拨打电话号码
+				//plus.device.dial('18854256256',true);
+				// 保持屏幕唤醒状态
+//				if(plus.device.isWakelock()){
+//					//mui.toast("ok");
+//				}else{
+//					//plus.device.setWakelock(false);					
+//				}
+				
+				// 设备震动
+				plus.device.vibrate();
+			}
+		</script>
+	</body>
+
+</html>

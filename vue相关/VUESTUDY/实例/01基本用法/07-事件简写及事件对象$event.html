@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>07-事件简写及事件对象$event</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="show">点我</button>
+        <hr>
+        <button @click="print($event)">Click Me</button>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+
+            },
+            methods:{
+                show(){
+                    console.log(111);
+                },
+                print(e){
+                    console.log(e.target.innerHTML);
+                    console.log(this);//这里面的this都是vue实例
+                }
+            }
+        });
+    </script>
+</body>
+</html>

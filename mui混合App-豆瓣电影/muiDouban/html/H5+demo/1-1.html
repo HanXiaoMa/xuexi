@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+	</head>
+
+	<body>
+		<!--
+			使用滑块设置屏幕亮度实例
+		-->
+		<div class="mui-content">
+		    <div style="height: 50px;"></div>
+		    <div style="padding: 20px;">
+		    	<div class="mui-input-row mui-input-range">
+		    		<label>Range</label>
+		    		<input type="range" min="0" max="100" value="1" onchange="setLight(this.value)" />
+		    	</div>
+		    </div>
+		</div>
+		<input type="button" onclick="test()" value="test"/>
+		<script type="text/javascript" src="../../js/mui.min.js" ></script>
+		<script type="text/javascript">
+			mui.init();
+			function setLight(val){
+				plus.screen.setBrightness(val/100);//设置屏幕亮度
+			}
+			function test(){
+				//alert(plus.device.imei);// ios不识别
+				//alert(plus.device.imsi); // ios不识别
+				//alert(plus.device.model);//ipone6
+				//alert(plus.device.vendor);//Apple
+				//alert(plus.device.uuid);//也可以打印出来,做一些客户信息的记录
+				
+				//alert(plus.os.language);//zh-Hans-CN
+				//alert(plus.os.version);//11.1.1
+				//alert(plus.os.name);//ios
+				
+				//alert(plus.display.resolutionHeight);//647
+				//alert(plus.display.resolutionWidth);//375
+				
+				//alert(plus.screen.getBrightness());//0.12725
+			}
+			
+			//plus.screen.lockOrientation("portrait-secondary");
+			//plus.screen.lockOrientation("portrait");
+			//plus.screen.lockOrientation("portrait-primary");
+			//plus.screen.lockOrientation("landscape-secondary");
+			//plus.screen.lockOrientation("landscape-primary");
+		</script>
+	</body>
+
+</html>

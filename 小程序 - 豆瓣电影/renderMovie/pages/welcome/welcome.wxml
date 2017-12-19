@@ -1,0 +1,30 @@
+<!-- wxml文件是编写小程序骨架的文件 -->
+<!-- view和div的作用是一样的,没有功能性的作用 -->
+<!-- 只有用text组件包围起来的文字才能被选中 -->
+<!-- 
+    rpx是一比一的,直接根据设计稿进行开发  
+    pt是逻辑分辨率
+    pt的大小和屏幕的尺寸有关系,简单的可以理解为长度和视觉单位
+    px是物理分辨率
+    px和屏幕尺寸是没有关系的
+    pt和px间的关系：
+      - 1个pt可以有1个px,2个px,甚至更多的px构成
+      - 在iphone6下2个px才构成一个pt
+    rpx的换算关系：
+      1px=1rpx=0.5pt
+    rpx的作用：
+      使用rpx可以自动在不同的分辨率下进行转换,而使用px单位则不会
+    并不是所有的地方都适用rpx,例如：字体则不需要用rpx进行转换,因为有的时候会产生模糊
+
+    事件冒泡
+      bindtap 不阻止冒泡
+      catchtap 阻止冒泡
+
+-->
+<view class='container'>
+  <image src='/images/avatar/1.png' class='user-avatar'></image>
+  <text class='user-name'>Hello Szr</text>
+  <view class='moto-container' bindtap='onTap'>
+    <text class='moto'>开启</text>
+  </view>
+</view>

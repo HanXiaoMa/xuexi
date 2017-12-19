@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3-4 留言板</title>
+</head>
+<body>
+	
+	<!-- 
+		目标：
+			1、使用网络请求进行前后端的交互
+			2、理解钩子函数的作用
+			3、vue过滤器的使用
+
+		实现：
+			1、实现"显示评论"按钮的功能
+				- 使用网络请求请求评论列表数据
+				- '解析'和'展示'评论列表数据
+			2、使用过滤器实现对日期的更改
+				- 定义处理日期格式的过滤器
+				- 调用处理日期格式的过滤器
+			3、页面加载完成即显示评论列表
+				- 在生命钩子中调用请求数据的方法
+				- 把请求数据放在beforeCreate中
+	 -->
+
+	<div id="box">
+		<!-- <button @click="search">显示评论</button> -->
+		<button>显示评论</button>
+		<ul>
+			<li v-for="item in arr">
+				<h4>{{ item.commentTxt }}</h4>
+				<p>{{ item.createAt | time }}</p>
+			</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript" src="../vue-resource.min.js"></script>
+	<script type="text/javascript">
+		Vue.filter('time',function(val){
+			// 只显示日期,不显示时间 - 字符串截取
+			return val.substr(0,10);
+		});
+		var vm = new Vue({
+			el:'#box',
+			data:{
+				arr:[]
+			},
+			beforeCreate(){
+				this.$http.get('http://api.artgoer.cn:8084/artgoer/api/v1/user/324380/v3/topic/topicHomeByLabel?pageIndex=2&token=b544cd63-6d42-46fe-a96c-3cf96bae3113&topicId=62187').then(function(res){
+						// then中如果只传入一个处理函数,默认是成功的情况
+						console.log(res.data.data.commentList);
+						this.arr=res.data.data.commentList;
+					},function(res){
+
+					});
+			},
+			methods:{
+				search(){
+					// this.$http.get('http://api.artgoer.cn:8084/artgoer/api/v1/user/324380/v3/topic/topicHomeByLabel?pageIndex=2&token=b544cd63-6d42-46fe-a96c-3cf96bae3113&topicId=62187').then(function(res){
+					// 	// then中如果只传入一个处理函数,默认是成功的情况
+					// 	console.log(res.data.data.commentList);
+					// 	this.arr=res.data.data.commentList;
+					// },function(res){
+
+					// });
+				}
+			}
+		});
+	</script>
+
+
+</body>
+</html>

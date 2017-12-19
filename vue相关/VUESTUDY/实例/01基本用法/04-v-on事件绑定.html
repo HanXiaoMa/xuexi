@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04-v-on事件绑定</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="show">点我</button>
+        <button @click="add">添加</button>
+        {{arr}}
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                arr:[12,34,56]
+            },
+            methods:{//用来定义方法的
+                show:function(){
+                    console.log(1);
+                },
+                add:function(){
+                    console.log(this);//this就表示当前的vue实例
+                    vm.arr.push(666);
+                    this.show();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

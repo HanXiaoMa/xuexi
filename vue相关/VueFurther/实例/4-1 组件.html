@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>4-1 组件</title>
+</head>
+<body>
+	
+	<div id="box">
+		<!-- 组件的调用 -->
+		<search></search>
+	</div>
+	<!-- 定义模版 
+			使用template标签,在box容器外定义模版,为template标签添加id,
+			设置template:'Selector'
+	-->
+	<template id="Search">
+		<div>
+			<h3>I am  Search Component Second</h3>
+			<h4>{{ msg }}</h4>
+			<button @click="changeText">更改</button>
+		</div>
+	</template>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		// 全局组件
+		Vue.component('search',{
+			// 如果想在HTML中写入多个标签,外层必须包裹容器
+			// template:'<div><h1>I am Search Component</h1><p>123456</p></div>'
+			template:'#Search',
+			// 组件中定义数据,需要避免引用赋值,是以函数返回值的形式定义数据的
+			data(){
+				return{
+					msg:'Hello Lesson Work'
+				}
+			},
+			methods:{
+				changeText(){
+					this.msg='Hello';
+				}
+			}
+		});
+		var vm = new Vue({
+			el:'#box',
+			data:{
+
+			},
+			methods:{
+
+			}
+		});
+	</script>
+</body>
+</html>

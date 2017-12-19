@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>2-1 v-show指令</title>
+	<style>
+		.div1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="box">
+		<button @click="fn">toggle</button><br/>
+		<!--
+			v-on 用来绑定事件监听
+			语法：v-on:click="fn" @click="fn"
+
+		-->
+		<div class="div1" v-show="bol"></div>
+		<!-- 
+			v-show
+			语法：v-show=表达式
+			若表达式为true,显示,反之隐藏
+			默认情况下,如果没有写入表达式,则默认是隐藏状态
+
+			本质上是控制display的值是block,还是none
+		 -->
+	</div>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#box',
+			data: {
+				bol:true
+			},
+			methods: {
+				fn:function(){
+					// 逻辑：如果div显示,点击隐藏;如果div隐藏,点击显示
+					this.bol=!this.bol;
+				}
+			}
+		});
+	</script>
+</body>
+
+</html>

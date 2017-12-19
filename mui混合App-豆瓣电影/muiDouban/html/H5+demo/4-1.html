@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<p>11111111111111</p>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			// 扩展API加载完成事件 - 判断整个设备是否直接运行起来了
+			document.addEventListener('plusready',function(){
+				console.log("ok");
+			});
+			
+//			mui.plusReady(function(){
+//				document.addEventListener('pause',function(){
+//					mui.toast('app在后台运行')
+//				});
+//			});
+
+			// 当滚动到窗口底部时触发 - 可以用来做上拉加载更多的数据加载
+			mui.plusReady(function(){
+				document.addEventListener('plusscrollbottom',function(){
+					mui.toast('滚动到底部了');
+				},false);
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="mui-content">
+		    <input type="button" value="test" onclick="test()" />
+		    <input type="button" value="btn" id="btn1" />
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			function test(){
+				var lanType = plus.networkinfo.getCurrentType();
+				alert(lanType);// 3 - wifi
+			}
+			
+			// 使用网络前先判断网络情况
+			document.getElementById("btn1").addEventListener('tap',function(){
+				var cS = plus.networkinfo.getCurrentType();
+				if(cS==0 || cS==1){
+					mui.toast('无法连接到网络')
+				}else if(cS==3){
+					mui.toast('使用WiFi');
+				}
+			});
+			
+			// 检测网络状态的变化
+			mui.plusReady(function(){
+				document.addEventListener('netchange',function(){
+					var nt = plus.networkinfo.getCurrentType();
+					switch (nt){
+						case plus.networkinfo.CONNECTION_ETHERNET:
+						case plus.networkinfo.CONNECTION_WIFI:
+							mui.toast('切换到WiFi')
+							break;
+						case plus.networkinfo.CONNECTION_CELL2G:
+			            case plus.networkinfo.CONNECTION_CELL3G:
+			            case plus.networkinfo.CONNECTION_CELL4G:
+			            	mui.toast("切换到4G网络!"); 
+			            	break;
+						default:
+							mui.toast('无网络');
+							break;
+					}
+				},false);
+			});
+		</script>
+	</body>
+
+</html>

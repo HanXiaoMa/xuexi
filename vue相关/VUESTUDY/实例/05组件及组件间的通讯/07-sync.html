@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>07-sync</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <h2>父组件 {{name}}</h2>
+        <!--父组件到子组件,父组件的值改变了,子组件的值也会跟着改变,反之不会-->
+        <input type="text" v-model="name">
+        <my-hello :name.sync="name"></my-hello>
+    </div>
+    <template id="hello">
+        <div>
+            <h3>子组件</h3>
+            {{name}}
+            <button @click="change">修改数据</button>
+            <!--只能修改子组件的,不能修改父组件的,而且在控制台上会发出警告-->
+        </div>
+    </template>
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({ //父组件
+            el: '#app',
+            data: {
+                name: 'jerry'
+            },
+            components: {
+                'my-hello': { //子组件
+                    data() {
+                        return {
+
+
+                        }
+                    },
+                    props: ['name'],
+                    template: '#hello',
+                    methods: {
+                        change() {
+                            // this.name = "smith";
+                            this.$emit('update:name', 'smith');
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

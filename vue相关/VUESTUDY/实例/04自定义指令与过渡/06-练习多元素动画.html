@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>06-练习多元素动画</title>
+    <link rel="stylesheet" href="../../animate.css">
+    <style>
+        p {
+            width: 50px;
+            height: 50px;
+            background: blue;
+            margin: 20px auto;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <input type="text" name="" value="" v-model="name">
+
+        <transition-group name="fade" enter-active-class="animated bounceInLeft" leave-active-class="animated fadeOut">
+            <p v-for="(v,k) in arr2" :key="k" v-show="flag">
+                {{v}}
+            </p>
+        </transition-group>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                flag: true,
+                arr: ['tom', 'szr', 'jerry', 'tim', 'mac'],
+                name: ''
+            },
+            computed: {
+                arr2: function() {
+                    var temp = [];
+                    this.arr.forEach(val => {
+                        if (val.includes(this.name)) {
+                            temp.push(val);
+                        }
+                    });
+                    return temp;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>01-全局组件和局部组件</title>
+</head>
+<body>
+    
+    <div id="app1">
+        <p>{{msg}}</p>
+        <first-com></first-com>
+        <Child></Child>
+    </div>
+    <div id="app2">
+        <p>{{msg}}</p>
+        <first-com></first-com>
+        <!--child是局部组件,没有注册到app2作用域中,所以会进行报错-->
+        <!--<Child></Child>-->
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        Vue.component('first-com', {
+            template:'<h3>123</h3>'
+        });
+
+        var Child={
+            template:'<h3>这是一个局部组件</h3>'
+        }
+
+        var v1=new Vue({
+            el:'#app1',
+            data:{
+                msg:'app1'
+            },
+            components:{
+                'Child':Child
+            }
+        });
+        var v2=new Vue({
+            el:'#app2',
+            data:{
+                msg:'app2'
+            }
+        })
+    </script>
+</body>
+</html>

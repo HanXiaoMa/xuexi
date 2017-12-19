@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3-5 事件对象</title>
+	<style>
+		.div1{
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- 
+		vue中事件对象的获取
+			@click="fn($event)"
+			$event 事件对象
+	 -->
+	
+	<div id="box">
+		<div class="div1" @click="fn($event)"></div>
+		<input type="text" @keydown="fn2($event)">
+		<input type="text" @keydown.up="fn3">
+		<button @contextMenu.prevent="f">btn</button>
+	</div>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:'#box',
+			data:{
+
+			},
+			methods:{
+				fn(e){
+					console.log(e);
+					console.log(e.clientX,e.clientY);
+				},
+				fn2(e){
+					console.log(e.keyCode);
+					if(e.keyCode==38){
+						console.log('up');
+					}else if(e.keyCode==40){
+						console.log('down');
+					}
+				},
+				fn3(){
+					console.log('fn3');
+				}
+			}
+		});
+	</script>
+</body>
+</html>

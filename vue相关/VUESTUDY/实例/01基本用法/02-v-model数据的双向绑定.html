@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02-v-model数据的双向绑定</title>
+</head>
+<body>
+    
+    <div id="app">
+        用户名：<input type="text" v-model="name">
+        <p>{{name}}</p>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',//vue2.0中是不允许挂载到html或者body这个元素上;但是在1.0中是可以的
+            data:{
+                name:'szr'//即使没有值也得写出来
+            }
+        });
+    </script>
+</body>
+</html>

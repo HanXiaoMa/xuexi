@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>10-属性的绑定和属性的简写</title>
+</head>
+<body>
+    <div id="app">
+        <img :src="url" alt="" :width="w" :height="h">
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                url:'http://images.bbc.shopex123.com/images/f8/9c/4a/e1748250afb25c44c436a74453cbd22135bc357b.png',
+                w:'100%',
+                h:'auto'
+            }
+        });
+    </script>
+
+</body>
+</html>

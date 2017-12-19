@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>4-7 父子组件</title>
+	<style>
+		.tabbarWrapper{
+			width: 100%;
+			height: 64px;
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			border-top: 1px solid #eee;
+		}
+		.itemWrapper{
+			width: 25%;
+			float: left;
+			text-align: center;
+		}
+		.itemWrapper img{
+			display: block;
+			width: 45px;
+			margin: 0 auto;
+		}
+		.itemWrapper span{
+			font-size: 12px;
+			color: #333;
+		}
+	</style>
+</head>
+<body>
+	
+	<div id="box">
+		<tabbar></tabbar>
+	</div>
+	<!-- 设置模版 tabbar -->
+	<template id="t">
+		<div class="tabbarWrapper">
+			<item></item>
+		</div>
+	</template>
+	<!-- 设置模版 item -->
+	<template id="i">
+		<div class="itemWrapper">
+			<img src="img/1.png" alt="">
+			<span>首页</span>
+		</div>
+	</template>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		var vm =new Vue({
+			el:'#box',
+			data:{
+
+			},
+			components:{
+				'tabbar':{
+					template:'#t',
+					components:{
+						// 子组件的调用,只能在父组件的模板中进行调用
+						'item':{
+							template:'#i'
+						}
+					}
+				}
+			}
+		});
+	</script>
+</body>
+</html>

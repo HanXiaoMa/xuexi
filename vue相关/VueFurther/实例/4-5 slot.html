@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>4-5 slot</title>
+</head>
+<body>
+	
+	<div id="box">
+		<test>1234567</test>
+		<demo>
+			<span slot="slot2">1234</span>
+			<span slot="slot1">12345678</span>
+			2222222222
+		</demo>
+	</div>
+	<!-- 定义模版 test -->
+	<template id="t">
+		<div class="testWrap">
+			<h1>test</h1>
+			<slot></slot>
+		</div>
+	</template>
+	<!-- 
+		slot:槽口,在组件封装的过程中,向外部留出槽口,也就是可供外部插入一些内容
+		语法：
+			<slot></slot>
+		具名slot:
+			<slot name="img1"></slot>
+			匹配：<img src="" alt="" slot="img1">
+	 -->
+	 <template id="d">
+	 	<div class="demoWrapper">
+	 		<h1>具名slot</h1>
+	 		<slot name="slot1"></slot>
+	 		<slot name="slot2"></slot>
+	 		<slot></slot>
+	 	</div>
+	 </template>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		var vm =new Vue({
+			el:'#box',
+			data:{
+
+			},
+			components:{
+				'test':{
+					template:'#t'
+				},
+				'demo':{
+					template:'#d'
+				}
+			}
+		});
+	</script>
+</body>
+</html>

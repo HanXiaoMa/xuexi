@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>6-1 一级路由</title>
+</head>
+<body>
+	
+	<div id="box">
+		<!-- 
+			使用路由去完成跳转,就不再使用a标签了
+				1、<router-link></router-link>,在两对尖括号中添加文本,url地址设置在一个to的属性下面
+				to = 路由配置时,routes数组中的path信息,需要填写在此处	
+				2、<router-view></router-view>,是用来占位的
+		 -->
+		<ul>
+			<li><router-link to="/home">home</router-link></li>
+			<li><router-link to="/news">news</router-link></li>
+			<li><router-link to="/hot">hot</router-link></li>
+		</ul>
+		<router-view></router-view>
+	</div>
+
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript" src="../vue-router.js"></script>
+	<script type="text/javascript">
+		var vm =new Vue({
+			el:'#box',
+			data:{
+
+			},
+			// 添加路由配置项
+			router:new VueRouter({
+				// 路径信息是盛放在数组中的
+				// path:'url',component:组件
+				routes:[
+					// {path:'/home',component:Home},
+					{path:'/home',component:{
+						template:'<h3>Home</h3>'
+					}},
+					// {path:'/news',component:News},
+					{path:'/news',component:{
+						template:'<h3>News</h3>'
+					}},
+					// {path:'/hot',component:Hot}
+					{path:'/hot',component:{
+						template:'<h3>Hot</h3>'
+					}}
+				]
+			})
+		});
+	</script>
+</body>
+</html>

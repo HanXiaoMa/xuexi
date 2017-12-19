@@ -1,0 +1,26 @@
+.m-tv-header{
+		width: 100%;
+		height: 45px;
+		line-height: 45px;
+		background-color: #fff;
+		font-size: 16px;
+		color: #333;
+		text-align: center;
+	}
+.m-tv-footernav{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		background-color: #fff;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+	}
+	.m-tv-footernav .tab-item{
+		width: 25%;
+		height: 50px;
+		text-align: center;
+		font-size: 14px;
+		color: #333;
+		float: left;
+	}

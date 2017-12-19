@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>4-3 组件-search练习</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.searchWrap{
+			width: 100%;
+			height: 48px;
+			background-color: #90ee90;
+			position: relative;
+		}
+		.searchWrap input{
+			position: absolute;
+			width: 80%;
+			height: 30px;border-radius: 5px;
+			border: 0;
+			outline: none;
+			left: 10px;
+			top: 10px;
+			text-indent: 2em;
+		}
+		.searchWrap img{
+			position: absolute;
+			width: 20px;
+		}
+		.icon_search{
+			left: 15px;
+			top: 15px;
+		}
+		.icon_scan{
+			top: 15px;
+			right: 70px;
+		}
+		.icon_chat{
+			width: 25px;
+			top: 15px;
+			right: 10px;
+		}
+		.tabbarWrapper{
+			width: 100%;
+			height: 64px;
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			border-top: 1px solid #eee;
+		}
+		.tabbarWrapper .item{
+			width: 25%;
+			float: left;
+			text-align: center;
+		}
+		.tabbarWrapper .item img{
+			display: block;
+			width: 45px;
+			margin: 0 auto;
+		}
+		.tabbarWrapper .item span{
+			font-size: 12px;
+			color: #333;
+		}
+	</style>
+</head>
+<body>
+	
+	<div id="box">
+		<search></search>
+		<tabbar></tabbar>
+	</div>
+	<!-- setting template Search -->
+	<!-- 
+		tabbar中有大量的重复代码,可以将重复的部分再进行封装,形成新的组件
+	 -->
+	 <!-- 
+		组件下面还可以定义组件,这就是父子组件
+	  -->
+	<template id="s">
+		<div class="searchWrap">
+			<input type="text" :placeholder="msg">
+			<img src="img/ic_chat_white.png" alt="" class="icon_chat">
+			<img src="img/ic_scan_gray.png" alt="" class="icon_scan">
+			<img src="img/ic_search_gray.png" alt="" class="icon_search" @click="search">
+		</div>
+	</template>
+	<!-- setting template TabBar -->
+	<template id="t">
+		<div class="tabbarWrapper">
+			<div class="item">
+				<img src="img/1.png" alt="">
+				<span>首页</span>
+			</div>
+			<div class="item">
+				<img src="img/2.png" alt="">
+				<span>全部</span>
+			</div>
+			<div class="item">
+				<img src="img/3.png" alt="">
+				<span>热售</span>
+			</div>
+			<div class="item">
+				<img src="img/4.png" alt="">
+				<span>购物车</span>
+			</div>
+		</div>
+	</template>
+
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:'#box',
+			data:{
+				// vm是一个实例,而vm下所定义的组件也是一个完整的实例,所以组件中不能直接使用vm里的数据
+			},
+			components:{
+				'search':{
+					template:'#s',
+					data(){
+						return{
+							msg:'请输入您想搜索的内容'
+						}
+					},
+					methods:{
+						search:function(){
+							// console.log(1);
+							this.msg='搜不到';
+						}
+					}
+				},
+				'tabbar':{
+					template:'#t'
+				}
+			}
+		});
+	</script>
+</body>
+</html>

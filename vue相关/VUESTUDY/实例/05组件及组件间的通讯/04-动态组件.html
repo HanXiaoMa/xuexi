@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04-动态组件</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <div>
+            <button @click="flag='my-hello'">显示hello组件</button>
+            <button @click="flag='my-world'">显示world组件</button>
+            <!--<my-hello></my-hello>
+            <my-world></my-world>-->
+
+            <!--动态组件-->
+            <keep-alive>
+                <!--
+                    使用keep-alive可以缓存非活动组件,可以保留状态,避免重新渲染,默认每次切换都会销毁非活动组件,重新渲染
+                -->
+                <component :is="flag"></component>
+            </keep-alive>
+
+        </div>
+    </div>
+
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                flag: 'my-hello'
+            },
+            components: {
+                'my-hello': {
+                    template: '<h3>I am hello component</h3>',
+                    data() {
+                        return {
+                            x: Math.random()
+                        }
+                    }
+                },
+                'my-world': {
+                    template: '<h3>I am world component</h3>',
+                    data() {
+                        return {
+                            y: Math.random()
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

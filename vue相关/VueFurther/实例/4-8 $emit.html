@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>4-8 $emit</title>
+</head>
+<body>
+	<div id="box">
+		<parent></parent>	
+	</div>
+	<!-- 设置模板 parent-->
+	<template id="p">
+		<div class="">
+			<h1>parent~~~~~{{ pMsg }}</h1>
+			<child @change="getVal" :parentmsg="pMsg"></child>
+			<!-- 
+				接收事件监听处,方法后面是不写小括号的
+			 -->
+		</div>
+	</template>
+	<!-- 设置模板 child-->
+	<template id="c">
+		<div @click="fn">
+			<h3>Child~~~~~~~{{ cMsg }} {{ parentmsg }}</h3>
+		</div>
+	</template>
+	<!-- 
+		子组件将值传递给父组件,叫做逆向传值,需要借助自定义事件
+	 -->
+	 <!-- 
+		父组件将值传递给子组件,叫做正向传值,在vue中是被允许的,所以不需要条件触发
+
+		希望从外部得到值 props
+	  -->
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:'#box',
+			data:{
+
+			},
+			components:{
+				'parent':{
+					template:'#p',
+					data(){
+						return{
+							pMsg:'Hello',
+							message:''
+						}
+					},
+					methods:{
+						getVal(val){
+							// val代表传递过来的值
+							console.log(val);
+							this.message=val;
+						}
+					},
+					components:{
+						'child':{
+							template:'#c',
+							data(){
+								return {
+									cMsg:'world'
+								}
+							},
+							props:['parentmsg'],
+							methods:{
+								fn(){
+									this.$emit('change',this.cMsg);
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+	</script>
+</body>
+</html>

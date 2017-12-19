@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>6-4 路由传参</title>
+</head>
+<body>
+	
+	<div id="box">
+		<p>
+			<router-link to="/home">home</router-link>
+			<router-link to="/news">news</router-link>
+		</p>
+		<router-view></router-view>
+	</div>
+	<template id="home">
+		<div>
+			<h3>Home</h3>
+		</div>
+	</template>
+	<template id="news">
+		<div>
+			<h3>News</h3>
+			<ul>
+				<!-- 1,2代表需要传递过去的参数 -->
+				<li><router-link to="/news/0">新闻001</router-link></li>
+				<li><router-link to="/news/1">新闻002</router-link></li>
+			</ul>
+			<router-view></router-view>
+		</div>
+	</template>
+	<template id="details">
+		<div>
+			<p>新闻详情页面</p>
+			<!-- 接收传递过来的参数 -->
+			<span>{{ $route.params.id }}</span>
+			<span>{{ arr[$route.params.id] }}</span>
+		</div>
+	</template>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript" src="../vue-router.js"></script>
+	<script type="text/javascript">
+		var Home={
+			template:'#home'
+		}
+		var News={
+			template:'#news'
+		}
+
+		var NewsDetails={
+			template:'#details',
+			data(){
+				return{
+					arr:['Jerry','Tom']
+				}
+			}
+		}
+
+		var routes=[
+			{path:'/home',component:Home},
+			{path:'/news',component:News},
+			{path:'/news/:id',component:NewsDetails}
+		]
+
+		var router=new VueRouter({
+			routes
+		});
+		var vm = new Vue({
+			el:'#box',
+			data:{
+
+			},
+			router,
+			beforeCreate(){
+				this.$router.push('/home');
+			}
+		});
+	</script>
+</body>
+</html>

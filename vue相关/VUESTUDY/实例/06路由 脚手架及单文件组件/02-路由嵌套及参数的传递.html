@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02-路由嵌套及参数的传递</title>
+    <link rel="stylesheet" href="../../animate.css">
+    <style>
+        .active {
+            font-size: 20px;
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div>
+            <router-link to="/home">主页</router-link>
+            <router-link to="/user">用户</router-link>
+        </div>
+        <div>
+            <transition enter-active-class="animated fadeIn">
+                 <router-view></router-view>
+            </transition>           
+        </div>
+        <button @click="push">切换路由</button>
+        <button @click="replace">替换路由</button>
+    </div>
+    <template id="user">
+        <div>
+            <h3>用户信息</h3>
+            <ul>
+                <!--tag:可以指定为什么标签-->
+                <router-link to="/user/login?loginname=tom&pwd=123" tag="li">用户登录</router-link>
+                <router-link to="/user/regist/alice/456" tag="li">用户注册</router-link>
+            </ul>
+            <router-view></router-view>
+        </div>
+    </template>
+    <script src="../../vue.js"></script>
+    <script src="../../vue-router.js"></script>
+    <script>
+        var Home = {
+            template: '<h3>I am Home</h3>'
+        }
+
+        var User = {
+            template: '#user'
+        }
+
+        var Login={
+            template:'<h4>I am Login 获取参数：{{$route.query}}</h4>'
+        }
+        var Regist={
+            template:'<h4>I am Regist 获取参数：{{$route.params}} 其余参数：拿到路径{{$route.path}}</h4>'
+        }
+        const routes = [
+            { path: '/home', component: Home },
+            {
+                path: '/user', component: User, children: [
+                    // 路由的嵌套(子路由)
+                    {path:'login',component:Login},
+                    // 指定这不是路径是传的参数
+                    {path:'regist/:username/:password',component:Regist}
+                ]
+            },
+            { path: '/', redirect: '/home' }
+        ];
+
+        const router = new VueRouter({
+            routes,
+            linkActiveClass: 'active'//更改活动链接的class名称
+        });
+        new Vue({
+            el: '#app',
+            router,
+            data: {
+
+            },
+            methods:{
+                push(){
+                    router.push({path:'/home'});//添加路由或者切换路由
+                },
+                replace(){
+                    router.replace({path:'/user'});//替换路由,没有历史记录
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

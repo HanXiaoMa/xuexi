@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>首页</title>
+
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<style>
+			html,
+			body,
+			.mui-content {
+				background-color: #fff;
+			}
+			
+			.wrap-search {
+				margin: 15px;
+				background: #e6e6e6;
+				height: 30px;
+				border-radius: 5px;
+				text-align: center;
+			}
+			
+			.wrap-search span {
+				line-height: 30px;
+				color: #AAAAAA;
+			}
+			
+			.wrap-search .mui-icon-search {
+				font-size: 16px;
+			}
+			
+			.wrap-search-text {
+				font-size: 14px;
+			}
+			
+			.item-img {
+				width: 60px;
+				height: 90px;
+				margin-right: 10px;
+			}
+			#refreshContainer{
+				padding-bottom: 50px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="wrap-search">
+				<span class="mui-icon mui-icon-search"></span>
+				<span class="wrap-search-text">电影/电视剧/影人</span>
+			</div>
+			<div id="refreshContainer" class="mui-scroll-wrapper" style="top: 50px;">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" id="movies">
+						<li class="mui-table-view-cell" v-for="item in movies">
+							<a href="javascript:;" :data-id="item.id" @tap="open_detail(item)">
+								<img :src="item.cover" class="item-img mui-pull-left" alt="" />
+								<div class="dark-big mui-ellipsis">{{item.title}}</div>
+								<div class="mui-ellipsis">
+									<span class="gray-small">{{item.genres}}</span>&nbsp;
+									<span class="orange-small" v-if="item.score>0">{{item.score}}分</span>
+									<span class="orange-small" v-else>暂无评分</span>
+								</div>
+								<div class="mui-ellipsis gray-small">
+									导演：{{item.directors}}
+								</div>
+								<div class="mui-ellipsis gray-small">
+									主演：{{item.casts}}
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/util.js"></script>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true, //启用右滑关闭功能
+				pullRefresh: {
+					container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					// 下拉刷新
+					down: {
+						auto: false, //可选,默认false.首次加载自动上拉刷新一次
+						callback: refreshData
+					},
+					// 上拉加载
+					up: {
+						height: 10, //可选.默认50.触发上拉加载拖动距离
+						auto: true, //可选,默认false.自动上拉加载一次
+						contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+						contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+						callback: loadMoreData
+					}
+				}
+			});
+
+			// 刷新数据,重新调用接口 - 下拉刷新
+			function refreshData() {
+				/* 
+				 *	请求热映列表接口
+				 *  https://api.douban.com/v2/movie/in_theaters
+				 */
+				mui.getJSON('https://api.douban.com/v2/movie/in_theaters', {
+					start: 0,
+					count: 10
+				}, function(resp) {
+					data_movies.movies.splice(0, data_movies.movies.length)
+					data_movies.movies = data_movies.movies.concat(convert(resp.subjects));
+					mui("#refreshContainer").pullRefresh().endPulldownToRefresh();
+					mui("#refreshContainer").pullRefresh().refresh(true);
+				});
+			}
+
+			// 请求下一页 - 上拉加载
+			function loadMoreData() {
+				/* 
+				 *	请求热映列表接口
+				 *  https://api.douban.com/v2/movie/in_theaters
+				 */
+				var hostUrl = 'https://api.douban.com';
+				mui.getJSON(hostUrl + '/v2/movie/in_theaters', {
+					start: data_movies.movies.length,
+					count: 10
+				}, function(resp) {
+					data_movies.movies = data_movies.movies.concat(convert(resp.subjects));
+					mui("#refreshContainer").pullRefresh().endPullupToRefresh(data_movies.movies.length > resp.total);
+				});
+			}
+
+			/*
+			 *	搜索框点击事件 
+			 * 
+			 */
+			mui(".wrap-search")[0].addEventListener('tap', function() {
+				mui.openWindow({
+					id:'search',
+					url:'./html/search.html'
+				});
+			});
+
+			/* 
+			 *	初始化滚动 
+			 * 
+			 */
+			mui(".mui-scroll-wrapper").scroll({
+				indicators: false
+			});
+
+			mui.plusReady(function() {
+				// 获取当前窗口
+				var self = plus.webview.currentWebview();
+
+				// 创建子webview窗口 并初始化
+				var aniShow = {};
+				util.initSubpage(aniShow);
+
+				var nview = plus.nativeObj.View.getViewById('tabBar'),
+					activePage = plus.webview.currentWebview(),
+					targetPage,
+					subpages = util.options.subpages,
+					pageW = window.innerWidth,
+					currIndex = 0;
+
+				//alert(pageW);
+				/**
+				 * 根据判断view控件点击位置判断切换的tab
+				 */
+				nview.addEventListener('click', function(e) {
+					var clientX = e.clientX;
+					if(clientX > 0 && clientX <= parseInt(pageW * 0.25)) {
+						currIndex = 0;
+					} else if(clientX > parseInt(pageW * 0.25) && clientX <= parseInt(pageW * 0.6)) {
+						currIndex = 1;
+					} else if(clientX > parseInt(pageW * 0.45) && clientX <= parseInt(pageW * 0.9)) {
+						currIndex = 2;
+					}
+					// 匹配对应tab窗口	
+					if(currIndex > 0) {
+						targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
+					} else {
+						targetPage = plus.webview.currentWebview();
+					}
+
+					if(targetPage == activePage) {
+						return;
+					}
+
+					//底部选项卡切换
+					util.toggleNview(currIndex);
+					// 子页面切换
+					util.changeSubpage(targetPage, activePage, aniShow);
+					//更新当前活跃的页面
+					activePage = targetPage;
+
+				});
+
+			});
+
+			// 使用vue实例进行数据渲染
+			var data_movies = new Vue({
+				el: '#movies',
+				data: {
+					movies: []
+				}
+			});
+			/* 
+			 *	预加载电影详情页 
+			 * 
+			 */
+			var detailPage = mui.preload({
+				id: 'move-detail',
+				url: './html/movie-detail.html'
+			});
+			/*
+			 * 为列表页添加点击事件  - 打开电影详情页面
+			 * 
+			 */
+			function open_detail(item) {
+				// 触发详情页面的movieId事件
+				mui.fire(detailPage, 'movieId', {
+					id: item.id
+				})
+				// 打开预加载的电影详情页
+				mui.openWindow({
+					id: 'move-detail'
+				})
+			}
+
+			// 转换函数
+			function convert(items) {
+				var newItems = [];
+				// 遍历items
+				items.forEach(function(item) {
+					// 电影类型
+					var genres = item.genres.toString().replace(/,/g, ' / ');
+
+					// 导演
+					var directors = '';
+					for(var i = 0; i < item.directors.length; i++) {
+						directors += item.directors[i].name;
+						if(i != item.directors.length - 1) {
+							directors += ' / ';
+						}
+					}
+
+					// 演员
+					var casts = '';
+					for(var i = 0; i < item.casts.length; i++) {
+						casts += item.casts[i].name;
+						if(i != item.casts.length - 1) {
+							casts += ' / ';
+						}
+					}
+
+					newItems.push({
+						id: item.id,
+						title: item.title,
+						genres: genres,
+						cover: item.images.large,
+						score: item.rating.average,
+						directors: directors,
+						casts: casts
+					})
+				});
+
+				return newItems;
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>11-style和class属性</title>
+    <style>
+        .aa{
+            color: red;
+            font-size: 20px;
+        }
+        .bb{
+            background: green;
+            font-size: 30px;
+        }
+        .cc{
+            font-weight: bold;
+            background: blue;
+            color: #f00;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!--
+            class
+        -->
+        <!--在vue属性绑定时,不可以直接使用css样式-->
+        <!--方式1：通过普通变量的形式-->
+        <p :class="a">11111</p>
+        <!--方式2：通过数组的形式同时引用多个-->
+        <p :class="[a,b]">22222</p>
+        <!--方式3：以json的形式进行 [这种方式是最常用的]-->
+        <p :class="{aa:false,bb:false,cc:true}">3333</p>
+        <p :class="{aa:num>0}">444</p>
+        <!--方式4：变量引用json形式-->
+        <p :class="hello">555</p>
+
+        <!--
+            style
+        -->
+        <span :style="x">1111111111</span>
+        <span :style="[x,y]">2222222222</span>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                a:'aa',
+                b:'bb',
+                num:3,
+                hello:{aa:true,bb:false,cc:true},
+                x:{color:'red',fontSize:'30px'},
+                y:{background:'blue'}
+            }
+        });
+    </script>
+</body>
+</html>

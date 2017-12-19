@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>01-路由的基本用法</title>
+    <style>
+        .active{
+            font-size: 20px;
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div>
+            <!--用router-link替换a链接标签,跳到哪去用to指定-->
+            <router-link to="/home">主页</router-link>
+            <router-link to="/news">新闻</router-link>
+            <!--使用router-view匹配路由渲染的内容-->
+            <router-view></router-view>
+        </div>
+    </div>
+    <script src="../../vue.js"></script>
+    <script src="../../vue-router.js"></script>
+    <script>
+        // 1.定义组件
+        var Home = {
+            template: '<h3>I am Home</h3>'
+        }
+
+        var News = {
+            template: '<h3>I am News</h3>'
+        }
+
+        // 2.配置路由
+        const routes = [
+            { path: '/home', component: Home },
+            { path: '/news', component: News },
+            // 路由的重定向
+            {path:'/',redirect:'/home'}
+        ];
+
+        // 3.创建路由实例
+        const router = new VueRouter({
+            routes, //相当于是routes:routes
+            // mode:'history' //使用history模式进行URL的解析操作
+            linkActiveClass:'active'//更改活动链接的class名称
+        });
+
+        // 4.创建根实例并且将路由挂载到实例上
+        new Vue({
+            el: '#app',
+            router,//注入路由
+            data: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>

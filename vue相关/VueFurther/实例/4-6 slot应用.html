@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>4-4 props</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.headerWrap{
+			width: 100%;
+			height: 48px;
+			text-align: center;
+			line-height: 48px;
+			background-color: #f7f7f7;
+			border-bottom: 1px solid #eee;
+			position: relative;
+		}
+		.headerWrap img{
+			position: absolute;
+			width: 25px;
+		}
+		.leftImg{
+			top: 10px;
+			right: 50px;
+		}
+		.rightImg{
+			top: 10px;
+			right: 10px;
+		}
+	</style>
+</head>
+<body>
+	
+	<div id="box">
+		<my-header txt="书影音">
+			<img src="img/ic_actionbar_search_icon.png" alt="" slot="leftImg" class="leftImg">
+			<img src="img/ic_create_group_chat_blue.png" alt="" slot="rightImg" class="rightImg">
+		</my-header>
+	</div>
+
+	<!-- 定义模版 myHeader -->
+	<template id="head">
+		<div class="headerWrap">
+			<span>{{ txt }}</span>
+			<slot name="leftImg"></slot>
+			<slot name="rightImg"></slot>
+		</div>
+	</template>
+
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:'#box',
+			data:{
+
+			},
+			components:{
+				'myHeader':{
+					template:'#head',
+					props:['txt']
+				}
+			}
+		});
+	</script>
+</body>
+</html>

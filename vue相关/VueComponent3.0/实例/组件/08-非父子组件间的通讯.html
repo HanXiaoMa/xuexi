@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>08-非父子组件间的通讯</title>
+</head>
+<body>
+	<div id="app1">
+		<button @click="inc">+1</button>
+	</div>
+	<div id="app2">
+		{{ total }}
+	</div>
+
+
+	<script type="text/javascript" src="../../vue.js"></script>
+	<script type="text/javascript">
+		var bus = new Vue();
+		var v1 = new Vue({
+			el:'#app1',
+			methods:{
+				inc(){
+					// emit
+					bus.$emit("creatment",1);
+				}
+			}
+		});
+
+		var v2 = new Vue({
+			el:'#app2',
+			data:{
+				total:0
+			},
+			mounted(){
+				var that = this;
+				bus.$on('creatment',function(count){
+					that.total+=count;
+				});
+			}
+		});
+	</script>
+</body>
+</html>

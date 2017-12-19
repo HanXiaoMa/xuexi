@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>01-自定义指令</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-hello>{{msg}}</div>
+        <button @click="change">更新模版</button>
+
+        <h3 v-world>{{msg}}</h3>
+
+        <p v-wbs>{{msg}}</p>
+
+        <input type="text" v-model="msg" v-focus>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        // 1.自定义全局指令 - 用的时候必须在指令名称前加前缀v-xxx
+        Vue.directive('hello', {
+            bind() { //最常用的钩子函数
+                console.log('指令第一次绑定到元素上时调用,只调用一次');
+            },
+            inserted() {
+                console.log('被绑定元素插入到DOM中时调用');
+            },
+            update() {
+                console.log('被绑定元素所在模版更新时调用');
+            },
+            componentUpdated() {
+                console.log('被绑定元素所在模版完成一次更新周期时调用');
+            },
+            unbind() {
+                console.log('指令与元素解绑定时执行,只调用一次');
+            }
+        });
+
+        // 2.钩子函数的参数
+        Vue.directive('world', {
+            bind(el, binding) {
+                console.log(el); //指令所绑定的元素
+                el.style.color = "red";
+                console.log(binding);
+            }
+        });
+
+        // 3.传入一个简单的函数,bind和update时调用
+        Vue.directive('wbs', function() {
+
+        });
+        new Vue({
+            el: '#app',
+            data: {
+                msg: 'welcome to QingDao'
+            },
+            methods: {
+                change() {
+                    this.msg = '1234567';
+                }
+            },
+            directives: {
+                // 4.自定义局部指令
+                focus: {
+                    inserted(el) {
+                        el.focus();
+                    }
+                }
+
+            }
+        });
+    </script>
+</body>
+
+</html>

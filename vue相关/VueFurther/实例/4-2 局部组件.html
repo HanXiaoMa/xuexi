@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>4-2 局部组件</title>
+</head>
+<body>
+	
+	<div id="box">
+		<test></test>
+		<my-test></my-test>
+	</div>
+	<template id="d">
+		<div>
+			<h3>I am test components, {{ msg }}</h3>
+		</div>
+	</template>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:'#box',
+			data:{
+
+			},
+			// 局部组件的作用域,在哪个实例里面进行定义,就只能在对应关联的容器中进行调用,不能在全局中使用
+			components:{
+				'test':{
+					template:'#d',
+					data(){
+						return {
+							msg:'Hello world'
+						}
+					}
+				},
+				// 如果组件命名采用了驼峰命名法,那么在调用时,需要使用-连接的方式来替代驼峰
+				'myTest':{
+					template:'<h3>~~~~~~~~~myTest~~~~~~~~~~</h3>'
+				}
+				// 每一个组件相当于一个完整的vue实例,组件间的作用域是相互独立的,也就是说组件间的值是不可以共用的
+			}
+		});
+	</script>
+</body>
+</html>

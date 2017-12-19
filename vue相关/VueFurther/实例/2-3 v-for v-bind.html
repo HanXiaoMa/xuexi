@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2-3 v-for</title>
+    <style>
+        .red{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <!--
+            v-for 类似于Js中的for循环
+            v-for="(item,index) in arr"
+                item - 每次遍历后得到的元素
+                arr - 需要遍历的数组
+                index - 下标
+            
+            v-for="(参数1,参数2) in arr"
+            注意：
+                - 参数1：永远是每次遍历后得到的元素(跟他叫什么名字无关,只跟参数的顺序有关)
+                - 参数2：每个元素的下标
+        -->
+        <ul>
+            <!--
+                有多少条数据,就渲染(render)多少个li
+            -->
+            <li v-for="(item,index) in arr" @click="fn(index)" :class="{red:item.bol}">{{ item.des }}</li>
+        </ul>
+
+        <!--
+            需求：
+                1、点击li,让被点li的背景变为红色
+        -->
+
+        <!--
+            v-bind属性绑定：
+                v-bind:class={类名:表达式}
+        -->
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                arr:[
+                    {des:'apple',bol:false},
+                    {des:'banner',bol:false},
+                    {des:'peal',bol:false},
+                    {des:'Jerry',bol:false}
+                ]
+            },
+            methods:{
+                fn:function(index){
+                    // 通过i知道当前被点的数据是谁
+                    // 把被点击的bol值改为true
+                    // 把所有其它未被选中的数据的bol改为false
+
+                    // 思路：
+                    // 先都改成false,再把选中的改为true
+                    for(var i=0;i<this.arr.length;i++){
+                        this.arr[i].bol=false;
+                    }
+                    this.arr[index].bol=true;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

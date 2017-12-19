@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>09-非父子组件间的通讯</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <my-a></my-a>
+        <my-b></my-b>
+        <my-c></my-c>
+    </div>
+    <template id="A">
+        <div>
+            <h3>A组件：{{name}}</h3>
+            <button @click="send">将数据发送出去,组件C进行接收</button>
+        </div>
+    </template>
+    <template id="B">
+        <div>
+            <h3>B组件：{{age}}</h3>
+            <button @click="send">将数据发送出去,组件C进行接收</button>
+        </div>
+    </template>
+    <template id="C">
+        <div>
+            <h3>C组件：{{name}},{{age}}</h3>
+        </div>
+    </template>
+    <script src="../../vue.js"></script>
+    <script>
+
+        // 定义一个空的vue实例作为事件总线
+        var Event=new Vue();
+
+        var A = {
+            data() {
+                return {
+                    name: 'tom'
+                }
+            },
+            template: '#A',
+            methods:{
+                send(){
+                    Event.$emit('data-a',this.name);
+                }
+            }
+        }
+        var B = {
+            data() {
+                return {
+                    age: 23
+                }
+            },
+            template: '#B',
+            methods:{
+                send(){
+                    Event.$emit('data-b',this.age);
+                }
+            }
+        }
+        var C = {
+            data() {
+                return {
+                    // 初始化name
+                    name:'',
+                    age:''
+                }
+            },
+            template: '#C',
+            mounted(){// 在模板编译完成后
+                // $on - 侦听事件
+                Event.$on('data-a',name=>{
+                    this.name=name;
+                });
+                Event.$on('data-b',age=>{
+                    this.age=age;
+                });
+
+                // 如果不用ES6的语法,this指的是Event,而不是实例C
+                // 在箭头函数不会产生新的this
+            }
+        }
+
+
+        new Vue({
+            el: '#app',
+            data: {
+
+            },
+            components: {
+                'my-a': A,
+                'my-b': B,
+                'my-c': C
+            }
+        });
+
+        // 现在就是想拿到非父子组件间的数据,应该怎么做？
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3-6 百度搜索</title>
+	<style>
+		.grey{
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		目标：
+			1、使用网络请求进行前后端的交互
+			2、vue事件的深入用法
+
+		实现：
+			1、实现搜索框的搜索功能
+				- 对用户在搜索框中输入的值进行数据的双向绑定
+				- 点击搜索按钮进行网络请求
+				- 将请求的数据在搜索框下进行展示
+			2、实现通过方向键控制搜索选项
+				- 绑定上下方向键的处理函数
+				- 对展示的数据进行样式绑定
+	 -->
+	<div id="box">
+		<input type="text" v-model="wd" @keydown.up.prevent="up()" @keydown.down="down()">
+		<button @click="search">搜索</button>
+		<ul>
+			<li v-for="(item,index) in arr" :class="{grey:index==nowIndex}">{{ item }}</li>
+		</ul>
+		<!-- 
+			所有的li数据,都有自己的index,
+			我们可以定义一个nowIndex来记录当前被选中的下标,
+			比较index和nowIndex的关系,
+			如果index==nowIndex,那么该条数据是被选中的数据,背景变为灰色
+		 -->
+	</div>
+	 <script type="text/javascript" src="../vue.min.js"></script>
+	 <script type="text/javascript" src="../vue-resource.min.js"></script>
+	 <script type="text/javascript">
+	 	var vm =new Vue({
+	 		el:'#box',
+	 		data:{
+	 			arr:[],
+	 			wd:'',
+	 			nowIndex:-1
+	 		},
+	 		methods:{
+	 			search(){
+	 				this.$http.jsonp('https://sug.so.360.cn/suggest',{
+	 					params:{
+	 						word:this.wd
+	 					}
+	 				}).then(function(res){
+	 					console.log(res.data.s);
+	 					this.arr=res.data.s;
+	 				});
+	 			},
+	 			up(){
+	 				this.nowIndex--;
+	 				if(this.nowIndex<0){
+	 					this.nowIndex=this.arr.length-1;
+	 				}
+	 			},
+	 			down(){
+	 				this.nowIndex++;
+	 				if(this.nowIndex>this.arr.length-1){
+	 					this.nowIndex=-1;
+	 				}
+	 			}
+	 		}
+	 	});
+	 </script>
+</body>
+</html>

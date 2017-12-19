@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>6-3 二级路由配置</title>
+</head>
+<body>
+	
+	<div id="box">
+		<ul>
+			<li><router-link to="/home">home</router-link></li>
+			<li><router-link to="/news">news</router-link></li>
+			<li><router-link to="/hot">hot</router-link></li>
+		</ul>
+		<router-view></router-view>
+	</div>
+	<!-- 设置模板 -->
+	<template id="home">
+		<div>
+			<h3>Home</h3>
+		</div>
+	</template>
+	<template id="news">
+		<div>
+			<h3>News</h3>
+			<router-link to="/news/film">film</router-link>
+			<router-view></router-view>
+		</div>
+	</template>
+	<template id="hot">
+		<div>
+			<h3>Hot</h3>
+		</div>
+	</template>
+	<template id="film">
+		<div>
+			<h3>Film</h3>
+		</div>
+	</template>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript" src="../vue-router.js"></script>
+	<script type="text/javascript">
+		var Home = Vue.extend({
+			template:'#home'
+		});
+
+		var News = Vue.extend({
+			template:'#news'
+		});
+
+		var Hot = Vue.extend({
+			template:'#hot'
+		});
+
+		var Film = Vue.extend({
+			template:'#film'
+		});
+
+		// 2、填写路径信息
+		var routes = [
+			{path:'/home',component:Home},
+			{path:'/news',component:News,children:[
+				// 二级路由,path分配,前面不要加/ 
+				{path:'/',redirect:'film'},//redirect 重定向另外的一种方式
+				{path:'film',component:Film}
+			]},
+			{path:'/hot',component:Hot}
+		]
+
+		// 3、创建路由对象
+		var router=new VueRouter({
+			routes
+		});
+
+		// 4、在vue实例中添加路由配置项
+		var vm =new Vue({
+			el:'#box',
+			data:{
+
+			},
+			router,
+			beforeCreate(){
+				this.$router.push('./home')
+			}
+		});
+	</script>
+</body>
+</html>

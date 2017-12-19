@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1-1 初识vue</title>
+</head>
+<body>
+	
+	<!-- View 视图需要一个容器包裹 -->
+	<div id="box">
+		<!-- 
+			将vue实例中的数据展示在页面上,需要借助表达式
+			{{变量名}}
+		 -->
+		<h1>{{msg}}</h1>
+	</div>
+
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script>
+		// 创建controller
+		// 在vue中,controller就是vue实例(对象)
+
+		// 通常我们管这个实例叫vm,但是这不是固定的写法
+		var vm=new Vue({
+			// {}中填写实例的配置项
+			el:'#box', // element元素,el配置项是用来设置与页面的关联,el:'选择器'
+			// data 数据(model)
+			data:{
+				msg:'Hello'
+			}
+			// 实例中可以设置很多配置项
+		});
+	</script>
+</body>
+</html>

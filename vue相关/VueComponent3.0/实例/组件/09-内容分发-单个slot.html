@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>09-内容分发-单个slot</title>
+</head>
+<body>
+	
+	<div id="box">
+		<my-comp>
+			<h3>这是替换slot的内容</h3>
+		</my-comp>
+	</div>
+
+	<script type="text/javascript" src="../../vue.js"></script>
+	<script type="text/javascript">
+		Vue.component('my-comp',{
+			template:'<div><h2>123</h2><slot></slot></div>'
+		});
+		var vm =new Vue({
+			el:'#box'
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="mui-content">
+		    <input type="button" name="test" id="test" value="test" onclick="test()" />
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			function test(){
+				// 1、系统选择按钮框
+//				plus.nativeUI.actionSheet({
+//					title:'是否要删除该信息？',
+//					cancel:'取消',
+//					buttons:[{title:'是'},{title:'否'}]
+//				},function(e){
+//					alert(e.index);
+//				})
+				
+				// 2、系统提示对话框
+//				plus.nativeUI.alert('Hello',function(){},'test','确定');
+
+				// 3、系统确认对话框
+//				plus.nativeUI.confirm('确认要删除？',function(e){
+//					if(e.index==0){
+//						alert('yes');
+//					}
+//				},'提示',['是','否']);
+
+				// 4、等待loading
+//				var w = plus.nativeUI.showWaiting();
+//				var w=plus.nativeUI.showWaiting('加载中...',{
+//					padding:'10px',
+//					loading:{
+//						display:'inline'
+//					}
+//				});
+//				setTimeout(function(){
+//					w.close();
+//				},2000);
+				
+				
+
+				// 5、系统输入对话框
+//				plus.nativeUI.prompt('您的姓名',function(){},'test','请输入...',['提交','取消']);
+
+				// 6、自动消失提示信息
+				plus.nativeUI.toast('这个字段不能为空');
+			}
+		</script>
+	</body>
+
+</html>

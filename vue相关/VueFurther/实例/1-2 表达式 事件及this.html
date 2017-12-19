@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表达式</title>
+</head>
+<body>
+    
+    <div id="box">
+        <!--1、Json数据(变量)-->
+        <h1>{{ msg }}</h1>
+        <!--2、数字-->
+        <h2>{{ 10 }}</h2>
+        <!--3、字符串-->
+        <h3>{{ "string" }}</h3>
+
+        <!--
+            注意区分变量和字符串：
+                引号包裹的为字符串,只要没有引号包裹的,都会被系统解析成变量或者是方法名
+        -->
+
+        <!--4、表达式-->
+        <h4>{{ 1+1 }}</h4>
+        <!--
+            5、可写入js代码,但是不推荐写复杂的代码
+                常用写法：写入三目运算符 (能够替代if else)
+            原因：MVC设计思想,是为了使页面和数据进行很好的分离,如果在表达式中写入了过多的逻辑代码,那么违背了最初的设计思想,也就使代码看起来很复杂,难以维护
+
+            注意：if else是不可以写的
+        -->
+        <h1>{{ 2>3?true:false }}</h1>
+    </div>
+
+    <script src="../vue.min.js"></script>
+    <script>
+        var vm=new Vue({
+            el:'#box',
+            data:{
+                msg:'Hello'
+            },
+            // 定义事件
+            methods:{
+                // 函数名：function(){代码块}
+                // 例如：fn
+                fn:function(){
+                    // this关键字,代表Vue实例
+                    // 这样引用数据的原因:this(Vue实例)代理了所有的data数据
+                    // 引用数据方法：this.数据名
+                    console.log(this);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

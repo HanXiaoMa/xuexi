@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>3-1 vue交互- get</title>
+</head>
+<body>
+	
+	<div id="box">
+		<button @click="search">Search</button>
+	</div>
+
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript" src="../vue-resource.min.js"></script>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:'#box',
+			data:{
+
+			},
+			methods:{
+				search:function(){
+					// get 请求
+
+					// 1) 请求文本 1.txt -> Hello World
+					this.$http.get('1.txt').then(function(res){
+						console.log('成功');
+						// res:请求成功时返回的数据集合
+						// 返回的参数中,status是请求的状态码,data是请求返回的数据
+						console.log(res.data); // Hello World
+					},function(res){
+						console.log('失败');
+					});
+
+					// 2) 需要向后台传递参数,并返回参数
+					// 需求：向后台传入两个数,返回两个数的和
+					// php代码：sum.php
+					/*
+						<?php
+							$a = $_GET['a'];
+							$b = $_GET['b'];
+							echo $a + $b;
+						?>
+					*/
+					this.$http.get('sum.php',{
+						params:{
+							a:3,
+							b:10
+						}
+					}).then(function(res){
+						console.log(res.data);
+					},function(res){
+
+					});
+
+					// 3) 请求真实数据 - 接口,接口描述,参数描述,返回值,状态码
+
+
+					// post请求
+					// 需求：向后台传入两个数,返回两个数的差
+					// php代码：sub.php
+					/*
+						<?php
+							$a = $_POST['a'];
+							$b = $_POST['b'];
+							echo $a - $b;
+						?>
+					*/
+
+					// 与get的区别
+					// 1> 参数传递
+					// 2> emulateJSON:true - 用来模拟Json数据格式,将参数传递过去
+					this.$http.post('sub.php',{
+						a:3,
+						b:1
+					},{
+						emulateJSON:true
+					}).then(function(res){
+						console.log(res.data);
+					},function(){});
+				}
+			}
+		});
+	</script>
+</body>
+</html>

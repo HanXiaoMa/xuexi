@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3-2 Vue过滤器</title>
+</head>
+<body>
+	
+	<div id="box">
+		<!-- 过滤器的调用 -->
+		<h1>{{num|sum}}</h1>
+	</div>
+
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		/*
+			定义过滤器
+			位置：在创建实例之前
+			Vue.filter('过滤器名称',function(val){
+				// val:需要处理的值
+				逻辑代码
+				通过return返回一个处理后的数据
+			});
+		*/ 
+		Vue.filter('sum',function(val){
+			return val+10;
+		});
+
+
+		var vm=new Vue({
+			el:'#box',
+			data:{
+				num:20
+			}
+		});
+	</script>
+</body>
+</html>

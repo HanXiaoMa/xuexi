@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02-自定义指令练习 - 拖动页面中的元素</title>
+    <style>
+        #app div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+        
+        .hello {
+            background-color: red;
+            top: 0;
+            left: 0;
+        }
+        
+        .word {
+            background-color: blue;
+            top: 0;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="hello" v-drag>1</div>
+        <div class="word" v-drag>2</div>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        Vue.directive('drag', function(el) {
+            el.onmousedown = function(e) {
+                // 获取鼠标点击处分别与div左边和上边的距离=鼠标的位置-div位置
+                var disx = e.clientX - el.offsetLeft;
+                var disy = e.clientY - el.offsetTop;
+
+                // 包含在onmousedown里面,表示点击后再移动,为了防止鼠标移除div,我们需要使用document
+                document.onmousemove = function(e) {
+                    // 获取div移动后的位置=鼠标的位置-disx/y;
+                    var l = e.clientX - disx;
+                    var t = e.clientY - disy;
+                    el.style.left = l + "px";
+                    el.style.top = t + "px";
+                }
+
+                // 停止移动
+                document.onmouseup = function(e) {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }
+            }
+        });
+        new Vue({
+            el: '#app',
+            data: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>

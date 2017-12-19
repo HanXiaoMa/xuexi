@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>03-vue实例的属性和方法</title>
+</head>
+<body>
+    
+    <div id="app">
+        <h2 ref="hello">111</h2>
+        <hr/>
+        <h1 ref="title">{{name}}</h1>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                msg:'hello',
+                name:'Tom'
+            },
+            name:'szr',
+            age:23,
+            show(){
+                console.log(1);
+            }
+        });
+
+        /*属性*/ 
+        // vm.属性名 => 获取data中的属性
+        console.log(vm.msg);
+        // $el => 获取vue实例关联的元素 - 是一个DOM对象
+        console.log(vm.$el);
+        vm.$el.style.color="red";
+        // $data => 获取数据对象的
+        console.log(vm.$data.msg);
+        // $options => 获取自定义属性
+        console.log(vm.$options.name);
+        console.log(vm.$options.age);
+        vm.$options.show();
+        // $refs => 获取页面中所有添加ref属性的元素
+        console.log(vm.$refs.hello);
+
+        /*方法*/
+        // $mount => 手动的挂载vue实例
+        // vm.$mount("#app");
+
+        // $destroy() => 销毁实例,销毁之后就不能用了
+
+        // vm.$nextTick() => 
+        vm.name="唐吉坷德";
+        // DOM还没更新完,Vue实现响应式并不是数据发生改变之后DOM立即变化,需要按照一定的策略进行DOM更新,需要时间
+        // 等待DOM执行完之后再执行下面的代码
+        // console.log(vm.$refs.title.textContent);
+        vm.nextTick(function(){
+            console.log(vm.$refs.title.textContent);
+        });
+    </script>
+</body>
+</html>

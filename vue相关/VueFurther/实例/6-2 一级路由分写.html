@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>6-2 一级路由分写</title>
+</head>
+<body>
+	
+	<div id="box">
+		<ul>
+			<li><router-link to="/home">home</router-link></li>
+			<li><router-link to="/news">news</router-link></li>
+			<li><router-link to="/hot">hot</router-link></li>
+		</ul>
+		<router-view></router-view>
+	</div>
+	<!-- 设置模板 -->
+	<template id="home">
+		<div>
+			<h3>Home</h3>
+		</div>
+	</template>
+	<template id="news">
+		<div>
+			<h3>News</h3>
+		</div>
+	</template>
+	<template id="hot">
+		<div>
+			<h3>Hot</h3>
+		</div>
+	</template>
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript" src="../vue-router.js"></script>
+	<script type="text/javascript">
+		// 1、准备路由模块
+		// 1) Vue.extend,用来注册路由所需的模块,模块名称首字母大写
+		// 2) 直接对象的方式
+		var Home = Vue.extend({
+			template:'#home'
+		});
+
+		var News = Vue.extend({
+			template:'#news'
+		});
+
+		var Hot = Vue.extend({
+			template:'#hot'
+		});
+
+		// 2、填写路径信息
+		var routes = [
+			{path:'/home',component:Home},
+			{path:'/news',component:News},
+			{path:'/hot',component:Hot}
+		]
+
+		// 3、创建路由对象
+		var router=new VueRouter({
+			routes
+		});
+
+		// 4、在vue实例中添加路由配置项
+		var vm =new Vue({
+			el:'#box',
+			data:{
+
+			},
+			router,
+			beforeCreate(){
+				this.$router.push('./home')
+			}
+		});
+
+		// router.push('/home');//分写方式
+	</script>
+</body>
+</html>

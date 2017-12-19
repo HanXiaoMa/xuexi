@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>10-内容分发-具名slot</title>
+</head>
+<body>
+	
+	<div id="box">
+		<layout>
+			<h1 slot="header">Header</h1>
+			<p>123</p>
+			<p>456</p>
+			<h1 slot="footer">Footer</h1>
+		</layout>
+	</div>
+	<script type="text/javascript" src="../../vue.js"></script>
+	<script type="text/javascript">
+		Vue.component('layout',{
+			template:`
+				<div class="container">
+					<header>
+						<slot name="header"></slot>
+					</header>
+					<main>
+						<slot></slot>
+					</main>
+					<footer>
+						<slot name="footer"></slot>
+					</footer>
+				</div>
+			`
+		});
+		var vm = new Vue({
+			el:'#box',
+			data:{
+
+			}
+		});
+	</script>
+</body>
+</html>

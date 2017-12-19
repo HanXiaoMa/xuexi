@@ -1,0 +1,32 @@
+<import src="post-item/post-item-template.wxml" />
+<view>
+  <!-- 轮播图 -->
+  <!-- 
+  indicator-dots="true" 是否显示指示点
+  autoplay="true" 是否自动播放
+  interval="3000" 间隔的秒数
+  circular="true" 是否无缝衔接
+-->
+  <swiper bindtap='onSwiperTap' class='post-swiper' indicator-dots="true" autoplay="true" interval="3000" circular="true">
+    <swiper-item>
+      <image src='/images/wx.png' class='post-swiper-img' data-postId="3"></image>
+    </swiper-item>
+    <swiper-item>
+      <image src='/images/vr.png' class='post-swiper-img' data-postId="4"></image>
+    </swiper-item>
+    <swiper-item>
+      <image src='/images/iqiyi.png' class='post-swiper-img' data-postId="2"></image>
+    </swiper-item>
+  </swiper>
+  <!-- 新闻列表 -->
+  <!-- wx:if="{{true}}" 是否显示 -->
+  <!-- 
+       1.使用block标签把需要循环的地方包裹起来
+       2.wx:for="" wx:for-item="" wx:for-index=""
+   -->
+  <block wx:for="{{posts_key}}" wx:for-item="item">
+    <view catchtap="onPostTap" data-postid="{{item.postId}}">
+      <template is="postItem" data="{{...item}}"  /> 
+    </view>   
+  </block>
+</view>

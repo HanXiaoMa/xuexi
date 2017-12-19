@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3-3 vue生命周期</title>
+</head>
+<body>
+	
+	<!-- 
+		实例的生命周期：实例从创建到销毁的过程
+		钩子函数：在生命周期中会自动调用一些函数
+		作用：我们可以利用钩子函数,来定义自己需要的一些逻辑
+		生命周期：
+			create(创建)：beforeCreate,created
+			mount(挂载)：beforeMount,mounted
+			update(更新)：beforeUpdate,updated
+			destroy(销毁)：beforeDestroy,destroyed
+	 -->
+	<div id="box">
+		<h1>{{ msg }}</h1>
+	</div>
+
+	<script type="text/javascript" src="../vue.min.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:'#box',
+			data:{
+				msg:'Hello'
+			},
+			// 钩子函数书写的位置,与data,methods等配置项同级
+			beforeCreate(){
+				console.group('beforeCreate~~~~~~~~~~~~~~~~~~~~~~~');
+				console.log('el:'+this.$el);
+				console.log('data:'+this.$data);
+				console.log('msg:'+this.msg);
+				// 三者都没有创建
+			},
+			created(){
+				console.group('created~~~~~~~~~~~~~~~~~~~~~~~');
+				console.log('el:'+this.$el);
+				console.log('data:'+this.$data);
+				console.log('msg:'+this.msg);
+				// el没有创建,data和msg创建
+			},
+			beforeMount(){
+				console.group('beforeMount~~~~~~~~~~~~~~~~~~~~~~~');
+				console.log('el:'+this.$el);
+				console.log('data:'+this.$data);
+				console.log('msg:'+this.msg);
+				// el并没有真正的创建出来,只是进行占位,data和msg创建
+			},
+			mounted(){
+				console.group('mounted~~~~~~~~~~~~~~~~~~~~~~~');
+				console.log('el:'+this.$el);
+				console.log('data:'+this.$data);
+				console.log('msg:'+this.msg);
+				// el已经替换了真实的数据,只是进行占位,data和msg创建
+				// el是设置挂载,是将容器和数据进行关联的
+			},
+			// 数据更新后,以下两个方法会执行
+			beforeUpdate(){
+				console.group('beforeUpdate~~~~~~~~~~~~~~~~~~~~~~~');
+				console.log('el:'+this.$el);
+				console.log('data:'+this.$data);
+				console.log('msg:'+this.msg);
+			},
+			updated(){
+				console.group('updated~~~~~~~~~~~~~~~~~~~~~~~');
+				console.log('el:'+this.$el);
+				console.log('data:'+this.$data);
+				console.log('msg:'+this.msg);
+			},
+			beforeDestroy(){
+				console.group('beforeDestroy~~~~~~~~~~~~~~~~~~~~~~~');
+				console.log('el:'+this.$el);
+				console.log('data:'+this.$data);
+				console.log('msg:'+this.msg);
+			},
+			destroyed(){
+				console.group('destroyed~~~~~~~~~~~~~~~~~~~~~~~');
+				console.log('el:'+this.$el);
+				console.log('data:'+this.$data);
+				console.log('msg:'+this.msg);
+			}
+			// 在实例销毁时执行,销毁后所有的数据和方法都不会生效
+
+		});
+	</script>
+</body>
+</html>

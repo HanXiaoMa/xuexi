@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04-生命周期</title>
+</head>
+<body>
+    
+    <div id="app">
+
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            beforeCreate(){
+                console.log('在实例初始化之后,数据观测和事件之前被调用');
+            },
+            created(){
+                console.log('实例已经创建完成之后被调用,但是挂载阶段还没开始,$el属性目前不可见');
+            },
+            beforeMount(){
+                console.log('在挂载开始之前被调用,相关的render函数第一次被调用');
+            },
+            mounted(){
+                console.log('挂载完成之后');
+            },
+            beforeUpdate(){
+                console.log('数据更新时调用');
+            },
+            updated(){
+                console.log('数据已经更新了');
+            },
+            beforeDestroy(){
+                console.log('销毁之前');
+            },
+            destroyed(){
+                console.log('销毁后');
+            }
+        });
+    </script>
+</body>
+</html>
